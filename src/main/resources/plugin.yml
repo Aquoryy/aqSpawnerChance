@@ -1,0 +1,12 @@
+name: aqSpawnerChance
+version: '${project.version}'
+main: org.aqu0ryy.spawnerchance.Loader
+
+api-version: '1.16'
+
+author: aqu0ryy
+description: Плагин шанс на установку яйца в спавнер.
+
+commands:
+  aqspawnerchance:
+    aliases: [ spawnerchance, aqsc ]

@@ -1,0 +1,21 @@
+settings:
+  success-set: '&aЯйцо установлено в спавнер.'
+  failed-set: '&cЯйцо не установлено в спавнер.'
+
+  groups:
+    default:
+      chance: 0.4
+    vip:
+      chance: 0.5
+
+messages:
+  no-permission: '&cУ вас недостаточно прав.'
+  no-arg: '&cТакого аргумента не существует.'
+  help:
+    - ''
+    - ' &c/{label} reload &7- Перезагрузить конфиги.'
+    - ''
+
+commands:
+  reload:
+    success: '&aКонфиги перезагружены.'
