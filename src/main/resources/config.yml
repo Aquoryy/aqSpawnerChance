@@ -1,6 +1,12 @@
 settings:
   success-set: '&aЯйцо установлено в спавнер.'
   failed-set: '&cЯйцо не установлено в спавнер.'
+  black-listed: '&cДанное яйцо нельзя поместить в спавнер.'
+
+  black-list:
+    - ZOMBIE
+    - SKELETON
+    - CREEPER
 
   groups:
     default:

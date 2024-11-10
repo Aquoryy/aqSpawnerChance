@@ -5,7 +5,7 @@ import org.aqu0ryy.spawnerchance.utils.ChatUtil;
 import org.aqu0ryy.spawnerchance.utils.VaultUtil;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.block.CreatureSpawner;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -18,7 +18,7 @@ import java.util.Random;
 public class SpawnerListener implements Listener {
 
     @EventHandler
-    public void onInteract(PlayerInteractEvent event) {
+    public void onChance(PlayerInteractEvent event) {
         Player player = event.getPlayer();
         ItemStack stack = player.getInventory().getItemInMainHand();
 
@@ -26,20 +26,27 @@ public class SpawnerListener implements Listener {
             Block block = event.getClickedBlock();
 
             if (block != null && block.getType() == Material.SPAWNER) {
-                Random random = new Random();
+                EntityType mob = EntityType.valueOf(stack.getType().name().replace("_SPAWN_EGG", ""));
 
-                if (random.nextDouble() <= Loader.getInst().getConfig().getDouble("settings.groups." + VaultUtil.getGroup(player) + ".chance")) {
-                    ChatUtil.sendMessage(player, Loader.getInst().getConfig().getString("settings.success-set"));
-                } else {
-                    ChatUtil.sendMessage(player, Loader.getInst().getConfig().getString("settings.failed-set"));
-
-                    if (stack.getAmount() > 1) {
-                        stack.setAmount(stack.getAmount() - 1);
-                    } else {
-                        player.getInventory().setItemInMainHand(null);
-                    }
-
+                if (Loader.getInst().getConfig().getStringList("settings.black-list").contains(String.valueOf(mob))) {
+                    ChatUtil.sendMessage(player, Loader.getInst().getConfig().getString("settings.black-listed"));
                     event.setCancelled(true);
+                } else {
+                    Random random = new Random();
+
+                    if (random.nextDouble() <= Loader.getInst().getConfig().getDouble("settings.groups." + VaultUtil.getGroup(player) + ".chance")) {
+                        ChatUtil.sendMessage(player, Loader.getInst().getConfig().getString("settings.success-set"));
+                    } else {
+                        ChatUtil.sendMessage(player, Loader.getInst().getConfig().getString("settings.failed-set"));
+
+                        if (stack.getAmount() > 1) {
+                            stack.setAmount(stack.getAmount() - 1);
+                        } else {
+                            player.getInventory().setItemInMainHand(null);
+                        }
+
+                        event.setCancelled(true);
+                    }
                 }
             }
         }
